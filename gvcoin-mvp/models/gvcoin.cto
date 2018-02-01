@@ -1,0 +1,19 @@
+/**
+ * Write your model definitions here
+ */
+
+namespace gvcoin
+
+participant User identified by email {
+  o String email
+}
+
+asset SampleAsset identified by assetId {
+  o String assetId
+  o String value
+}
+
+transaction ChangeGvCoinOwner {
+  o String newValue
+  --> Asset relatedAsset
+}
