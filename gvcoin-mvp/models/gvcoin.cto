@@ -4,6 +4,13 @@
 
 namespace gvcoin
 
+enum University_Entity {
+  o STUDENT_SOCIETY
+  o RESEARCH_CENTER
+  o ADMINISTRATIVE_DEPARTMENT
+  o ACADEMIC_DEPARTMENT
+}
+
 participant User identified by email {
   o String email
 }
