@@ -8,10 +8,9 @@ contract GvCoin {
         bool accepted;
     }
     
-    struct Society{
+    struct Society {
         uint wealth;
         string name;
-        uint id;
         address society_address;
     }
     
@@ -25,7 +24,21 @@ contract GvCoin {
         _;
     }
     
-    function issueGvCoins(uint amount, uint recipient_index) public {
+    constructor () public {
+        admin = msg.sender;
+    }
+    
+    function createSociety (string name, address society_address) public {
+        Society memory newSociety = Society({
+            name: name,
+            wealth: 0,
+            society_address: society_address
+        });
+
+        societies.push(newSociety);
+    }
+    
+    function issueGvCoins(uint amount, uint recipient_index) public restricted {
         gvconomy = gvconomy + amount;
         societies[recipient_index].wealth = societies[recipient_index].wealth + amount;
     }
@@ -51,5 +64,9 @@ contract GvCoin {
         Request storage request = requests[request_index];
         request.accepted = true;
         issueGvCoins(amount, society_index);
+    }
+    
+    function getWealth(uint index) public view returns (uint) {
+        return societies[index].wealth;
     }
 }
