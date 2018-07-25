@@ -38,7 +38,7 @@ contract GvCoin {
         societies.push(newSociety);
     }
     
-    function issueGvCoins(uint amount, uint recipient_index) public restricted {
+    function issueGvCoins(uint amount, uint recipient_index) private restricted {
         gvconomy = gvconomy + amount;
         societies[recipient_index].wealth = societies[recipient_index].wealth + amount;
     }
@@ -64,9 +64,5 @@ contract GvCoin {
         Request storage request = requests[request_index];
         request.accepted = true;
         issueGvCoins(amount, society_index);
-    }
-    
-    function getWealth(uint index) public view returns (uint) {
-        return societies[index].wealth;
     }
 }

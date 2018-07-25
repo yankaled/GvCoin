@@ -1,9 +1,9 @@
 const HDWalletProvider = require('truffle-hdwallet-provider');
 const Web3 = require('web3');
-const compiledFactory = require('./build/GvCoin.json'); //SETAR NOME DA COOOIN
+const compiledGvCoin = require('./build/GvCoin.json');
 
 const provider = new HDWalletProvider(
-  'call glow acoustic vintage front ring trade assist shuffle mimic volume reject',
+  'manual round arrive spy load gospel spy violin close distance rookie banana',
   'https://rinkeby.infura.io/v3/7c5f1d509fe64238befbf589c3a386ed'
 );
 const web3 = new Web3(provider);
@@ -14,9 +14,9 @@ const deploy = async () => {
   console.log('Deploy da conta: ', accounts[0]);
 
   const result = await new web3.eth.Contract(
-    JSON.parse(NOME.interface) //REVER
+    JSON.parse(compiledGvCoin.interface)
   )
-    .deploy({ data: NOME.bytecode }) //REVER
+    .deploy({ data: compiledGvCoin.bytecode })
     .send({ gas: '1000000', from: accounts[0] });
 
   console.log('Deploy do contrato em: ', result.options.address);
