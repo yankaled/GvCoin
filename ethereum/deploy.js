@@ -1,7 +1,8 @@
 const HDWalletProvider = require('truffle-hdwallet-provider');
 const Web3 = require('web3');
 const compiledGvCoin = require('./build/GvCoin.json');
-require('dotenv').config()
+const dotenv = require('dotenv').config();
+console.log(dotenv);
 
 const provider = new HDWalletProvider(
   process.env.MN,
