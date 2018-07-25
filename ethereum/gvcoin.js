@@ -1,10 +1,10 @@
 import web3 from './web3';
-import NOME from './build/GvCoin.json'; //REvER
+import compiledGvCoin from './build/GvCoin.json';
 
 const instance = new web3.eth.Contract(
     //REVER
-  JSON.parse(NOME.interface),
-  'COLOCAR CONTA AQUI'
+  JSON.parse(compiledGvCoin.interface),
+  process.env.MN
 );
 
 export default instance;
