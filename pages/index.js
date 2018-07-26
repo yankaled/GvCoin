@@ -1,15 +1,44 @@
 import React, { Component } from 'react';
-import gvcoin from '../ethereum/gvcoin';  
-import { Link } from '../routes';
+import { Card, Button, Form, Message } from 'semantic-ui-react';
+import Layout from '../components/Layout';
+import { Link, Router } from '../routes';
 
-class CampaignIndex extends Component {
+class GvCoinIndex extends Component {
+  state = {
+    access_token: ''
+  };
+
+  onSubmit = async event => {
+    event.preventDefault();
+    if( this.state.access_token == "IMQ" ){
+      Router.pushRoute(`/admin/admin_dashboard`);
+    }else if( this.state.access_token == "GvCode") {
+      Router.pushRoute(`/dashboard/index`);
+    };
+
+  };
+
   render() {
     return (
+      <Layout>
         <div>
-          <h3>Open Campaigns</h3>
+          <h2 style={{ color: "#ffffff"}}>GvCoin</h2>
+
+          <Form onSubmit={this.onSubmit}>
+            <h3 style={{ color: "#ffffff"}}> Token de Acesso: </h3>
+            <Form.Input
+             placeholder='blergh'
+             value={this.state.access_token}
+             onChange={event =>
+              this.setState({ access_token: event.target.value })} 
+            />
+            <Button color="violet">Enviar</Button>
+          </Form>
+
         </div>
+      </Layout>
     );
   }
 }
 
-export default CampaignIndex;
+export default GvCoinIndex;
