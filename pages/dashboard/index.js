@@ -6,6 +6,7 @@ import web3 from '../../ethereum/web3';
 import gvcoin from '../../ethereum/gvcoin';
 import RequestForm from '../../components/RequestForm';
 import TransferForm from '../../components/TransferForm';
+import Plot from '../../components/Plot';
 
 class GvCoinIndex extends Component {
   state = {
@@ -81,15 +82,6 @@ class GvCoinIndex extends Component {
     return <Card.Group items={items} />;
   }
 
-  onTest = async event => {
-    event.preventDefault();
-    const accounts = await web3.eth.getAccounts();
-    const society_index = await gvcoin.methods.getSocietyByAddress(accounts[0]).call();
-    const societies = await gvcoin.methods.societies(society_index).call();
-    console.log(accounts[0]);
-    console.log(societies[1]);
-  };
-
   render() {
     return (
       <Layout>
@@ -97,7 +89,10 @@ class GvCoinIndex extends Component {
           <h2 style={{ color: "#ffffff"}}>{this.state.name}</h2>
             <Grid>
                 <Grid.Row>
-                    <Grid.Column width={10}>{this.renderCards()}</Grid.Column>
+                    <Grid.Column width={10}>
+                      <h3 style={{ color: "white" }}>Dados da Entidade</h3>
+                      {this.renderCards()}
+                    </Grid.Column>
 
                     <Grid.Column width={6}>
                       <RequestForm/>
@@ -106,7 +101,8 @@ class GvCoinIndex extends Component {
 
                 <Grid.Row>
                   <Grid.Column width={10}>
-                   
+                    <h3 style={{ color: "white" }}>Estatísticas</h3>
+                    <Plot parameter_1={this.state.gvconomy} parameter_2={this.state.wealth}/>
                   </Grid.Column>
 
                   <Grid.Column width={6}>
