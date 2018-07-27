@@ -13,23 +13,23 @@ export default class MenuExampleContentProp extends Component {
     return (
       <Menu style={{ borderRadius: '0px' }}>
         <Menu.Item
-          name='editorials'
-          active={activeItem === 'editorials'}
-          content='Editorials'
+          name='inicio'
+          active={activeItem === 'inicio'}
+          content='Inicio'
           onClick={this.handleItemClick}
         />
 
         <Menu.Item
-          name='reviews'
-          active={activeItem === 'reviews'}
-          content='Reviews'
+          name='entidades'
+          active={activeItem === 'entidades'}
+          content='Entidades'
           onClick={this.handleItemClick}
         />
 
         <Menu.Item
-          name='upcomingEvents'
-          active={activeItem === 'upcomingEvents'}
-          content='Upcoming Events'
+          name='fgv'
+          active={activeItem === 'fgv'}
+          content='FGV'
           onClick={this.handleItemClick}
         />
       </Menu>

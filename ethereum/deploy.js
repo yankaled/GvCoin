@@ -3,7 +3,7 @@ const Web3 = require('web3');
 const compiledGvCoin = require('./build/GvCoin.json');
 
 const provider = new HDWalletProvider(
-  process.env.MN,
+  'manual round arrive spy load gospel spy violin close distance rookie banana',
   'https://rinkeby.infura.io/v3/7c5f1d509fe64238befbf589c3a386ed'
 );
 const web3 = new Web3(provider);

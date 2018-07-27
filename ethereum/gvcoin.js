@@ -3,7 +3,7 @@ import compiledGvCoin from './build/GvCoin.json';
 
 const instance = new web3.eth.Contract(
   JSON.parse(compiledGvCoin.interface),
-  '0x67003aE3E2c33B68d6C8a5947131B569af8a7916'
+  '0x41Aa37ea9CfAe660965D801b26227B19233c6360'
 );
 
 export default instance;

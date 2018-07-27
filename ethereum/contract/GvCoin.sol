@@ -18,6 +18,8 @@ contract GvCoin {
     Society[] public societies;
     address public admin;
     uint public gvconomy;
+    mapping(string => uint) index_society_name;
+    mapping(address => uint) index_society_address;
     
     modifier restricted() {
         require(msg.sender == admin);
@@ -36,6 +38,8 @@ contract GvCoin {
         });
 
         societies.push(newSociety);
+        index_society_name[name] = societies.length - 1;
+        index_society_address[society_address] = societies.length - 1;
     }
     
     function issueGvCoins(uint amount, uint recipient_index) private restricted {
@@ -50,6 +54,7 @@ contract GvCoin {
     }
     
     function createRequest(string description, uint value, address recipient) public {
+        require(value > 0);
         Request memory newRequest = Request({
             description: description,
             value: value,
@@ -64,5 +69,18 @@ contract GvCoin {
         Request storage request = requests[request_index];
         request.accepted = true;
         issueGvCoins(amount, society_index);
+    }
+    
+    function destroyGvCoins(uint society_index, uint amount ) public restricted {
+        societies[society_index].wealth = societies[society_index].wealth - amount;
+        gvconomy = gvconomy - amount;
+    }
+    
+    function getSocietyByName(string name) public view returns(uint) {
+        return index_society_name[name];
+    }
+    
+    function getSocietyByAddress(address society_address) public view returns(uint) {
+        return index_society_address[society_address];
     }
 }
