@@ -34,6 +34,7 @@
     "semantic-ui-react": "^0.77.1",
     "solc": "^0.4.24",
     "truffle-hdwallet-provider": "0.0.3",
+    "underscore": "^1.9.1",
     "web3": "^1.0.0-beta.26",
     "webpack": "^3.12.0"
   },
