@@ -7,31 +7,83 @@ import gvcoin from '../../ethereum/gvcoin';
 import RequestForm from '../../components/RequestForm';
 import TransferForm from '../../components/TransferForm';
 import Plot from '../../components/Plot';
-import { resolve } from 'path';
+import CreateSocietyForm from '../../components/CreateSocietyForm';
 
-class GvCoinIndex extends Component {
+class AdminIndex extends Component {
   state = {
     gvconomy: '',
-    requests_length: '',
-    societies_length: '',
-    socs: ''
+    societies: '',
+    requests: '',
+    accounts: ''
   };
 
   //==========================================================================
-  async componentDidMount() {
-    const society = await gvcoin.methods.societies(0).call();
-    const requests_length = await gvcoin.methods.getRequestsLegth().call();
-    const societies_length = await gvcoin.methods.getSocietiesLength().call();
+  static async getInitialProps() {
     const accounts = await web3.eth.getAccounts();
     const gvconomy = await gvcoin.methods.gvconomy().call();
+    const requests_length = await gvcoin.methods.getRequestsLength().call();
+    const societies_length = await gvcoin.methods.getSocietiesLength().call();
 
-    this.setState({
-      gvconomy: gvconomy,
-      requests_length: requests_length,
-      societies_length: societies_length
-    });
+    const requests = await Promise.all(
+      Array(parseInt(requests_length))
+        .fill()
+        .map((element, index) => {
+          return gvcoin.methods.requests(index).call();
+        })
+    );
+
+    const societies = await Promise.all(
+      Array(parseInt(societies_length))
+      .fill()
+      .map((element, index) => {
+        return gvcoin.methods.societies(index).call();
+      })
+    );
+
+    return { societies, requests, gvconomy, accounts };
+
+    // this.setState({
+    //   requests: requests,
+    //   accounts: accounts,
+    //   societies: societies,
+    //   gvconomy: gvconomy
+    // });
   }
   //=============================================================================
+
+  renderRequests() {
+    const items = this.props.requests.map(request => {
+      return {
+        header: request[2],
+        description: ([
+          "Quantia: ", request[1], <br/>,
+          "Descrição: ", request[0]]
+        ),
+        fluid: true 
+      };
+    });
+
+    return <Card.Group items={items} />;
+  }
+
+  renderReq() {
+    return(
+      <Card.Group>
+          {this.props.requests.map((request) => (
+            <Card
+              key={request[0]}
+              header={request[2]}
+              description={
+                ["Quantia: ", request[1], <br/>,
+                  "Descrição: ", request[0]]
+              }
+              fluid={true}
+
+            />
+          ))}
+      </Card.Group>
+    );
+  }
 
 
   render() {
@@ -42,22 +94,27 @@ class GvCoinIndex extends Component {
             <Grid>
                 <Grid.Row>
                     <Grid.Column width={10}>
-                      <h3 style={{ color: "white" }}>Entidades</h3>
+                      <h3 style={{ color: "white" }}>Requisições de GvCoins: </h3>
+                        {this.renderReq()}
                     </Grid.Column>
 
                     <Grid.Column width={6}>
-                      <RequestForm/>
+                      <CreateSocietyForm/>
                     </Grid.Column>
                 </Grid.Row>
 
                 <Grid.Row>
                   <Grid.Column width={10}>
                     <h3 style={{ color: "white" }}>Estatísticas</h3>
+
                     <Plot/>
+
                   </Grid.Column>
 
                   <Grid.Column width={6}>
+
                     <TransferForm/>
+
                   </Grid.Column>
                 </Grid.Row>                
             </Grid>
@@ -67,4 +124,4 @@ class GvCoinIndex extends Component {
   }
 }
 
-export default GvCoinIndex;
+export default AdminIndex;

@@ -13,6 +13,8 @@ contract GvCoin {
         uint wealth;
         uint revenue_total;
         uint finance_total;
+        uint[] revenue_series;
+        uint[] finance_series;
         string name;
         address society_address;
     }
@@ -38,6 +40,8 @@ contract GvCoin {
             name: name,
             revenue_total: 0,
             finance_total: 0,
+            revenue_series: new uint[](0),
+            finance_series: new uint[](0),
             wealth: 0,
             society_address: society_address
         });
@@ -50,13 +54,14 @@ contract GvCoin {
     function issueGvCoins(uint amount, uint recipient_index) private restricted {
         gvconomy += amount;
         societies[recipient_index].wealth += amount;
-        societies[recipient_index].finance_total += amount;
+        societies[recipient_index].finance_series.push(amount);
     }
     
     function transferGvCoins(uint amount, uint sender_index, uint recipient_index) public {
         require(societies[sender_index].wealth >= amount);
         societies[sender_index].wealth -= amount;
         societies[recipient_index].wealth += amount;
+        societies[recipient_index].revenue_series.push(amount);
         societies[recipient_index].revenue_total += amount; 
     }
     
@@ -71,8 +76,7 @@ contract GvCoin {
         requests.push(newRequest);
     }
     
-    function approveRequest(uint request_index, uint society_index, uint amount) 
-    public restricted {
+    function approveRequest(uint request_index, uint society_index, uint amount) public restricted {
         Request storage request = requests[request_index];
         request.accepted = true;
         issueGvCoins(amount, society_index);
@@ -101,7 +105,6 @@ contract GvCoin {
     
     function getSocieties() public view returns (uint[], uint[], uint[], string[], address[]) {
         uint l = societies.length;
-        
         uint[] memory wealths = new uint[](l);
         uint[] memory revs = new uint[](l);
         uint[] memory finances = new uint[](l);
@@ -120,9 +123,26 @@ contract GvCoin {
         return (wealths, revs, finances, names, addrs);
     }
     
+    function getSocietiesSeries() public view returns (uint[][], uint[][]) {
+        uint l = societies.length;
+        uint[][] memory fin_series = new uint[][](l);
+        uint[][] memory rev_series = new uint[][](l);
+        
+        for (uint i = 0; i < societies.length; i++) {
+            for (uint j = 0; j < societies[i].finance_series.length; j++){
+                fin_series[i][j] = societies[i].finance_series[j];
+            }
+            
+            for (uint z = 0; z < societies[i].revenue_series.length; z++) {
+                rev_series[i][z] = societies[i].revenue_series[z];
+            }
+        }
+        
+        return(fin_series, rev_series);
+    }
+    
     function getRequests() public view returns (string[], uint[], address[], bool[]) {
         uint l = requests.length;
-        
         string[] memory descs = new string[](l);
         uint[] memory values = new uint[](l);
         address[] memory recs_socs = new address[](l);

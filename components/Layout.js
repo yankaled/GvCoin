@@ -18,7 +18,7 @@ export default props => {
           }
           p {
             align-content: center;
-            background-color: #495285;
+            background-color: #ffffff;
             color: #fff;
             display: flex;
             flex-direction: column;

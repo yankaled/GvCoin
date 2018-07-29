@@ -17,7 +17,7 @@ const deploy = async () => {
     JSON.parse(compiledGvCoin.interface)
   )
     .deploy({ data: compiledGvCoin.bytecode })
-    .send({ gas: '1000000', from: accounts[0] });
+    .send({ gas: '2000000', from: accounts[0] });
 
   console.log('Deploy do contrato em: ', result.options.address);
 };
