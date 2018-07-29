@@ -1,5 +1,4 @@
 pragma solidity ^0.4.17;
-pragma experimental ABIEncoderV2;
 
 contract GvCoin {
     struct Request {
@@ -99,43 +98,4 @@ contract GvCoin {
         return societies.length;
     }
     
-    function getSocieties() public view returns (uint[], uint[], uint[], string[], address[]) {
-        uint l = societies.length;
-        
-        uint[] memory wealths = new uint[](l);
-        uint[] memory revs = new uint[](l);
-        uint[] memory finances = new uint[](l);
-        string[] memory names = new string[](l);
-        address[] memory addrs = new address[](l);
-        
-        
-        for (uint i = 0; i < l; i++) {
-            wealths[i] = societies[i].wealth;
-            revs[i] = societies[i].revenue_total;
-            finances[i] = societies[i].finance_total;
-            names[i] = societies[i].name;
-            addrs[i] = societies[i].society_address;
-        }
-        
-        return (wealths, revs, finances, names, addrs);
-    }
-    
-    function getRequests() public view returns (string[], uint[], address[], bool[]) {
-        uint l = requests.length;
-        
-        string[] memory descs = new string[](l);
-        uint[] memory values = new uint[](l);
-        address[] memory recs_socs = new address[](l);
-        bool[] memory accs = new bool[](l);
-        
-        
-        for (uint i = 0; i < l; i++) {
-            descs[i] = requests[i].description;
-            values[i] = requests[i].value;
-            recs_socs[i] = requests[i].recipient_society;
-            accs[i] = requests[i].accepted;
-        }
-        
-        return (descs, values, recs_socs, accs);
-    }
 }

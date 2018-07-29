@@ -27,7 +27,7 @@ class GvCoinIndex extends Component {
           <Form onSubmit={this.onSubmit}>
             <h3 style={{ color: "#ffffff"}}> Token de Acesso: </h3>
             <Form.Input
-             placeholder='blergh'
+             placeholder='Insira o token para entrar no sistema'
              value={this.state.access_token}
              onChange={event =>
               this.setState({ access_token: event.target.value })} 

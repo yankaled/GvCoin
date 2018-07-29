@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Card, Button, Form, Input, Message, Grid } from 'semantic-ui-react';
+import { Card, Button, Form, Input, Message, Grid, Pagination, Icon } from 'semantic-ui-react';
 import Layout from '../../components/Layout';
 import { Link, Router } from '../../routes';
 import web3 from '../../ethereum/web3';
@@ -11,11 +11,8 @@ import CreateSocietyForm from '../../components/CreateSocietyForm';
 
 class AdminIndex extends Component {
   state = {
-    gvconomy: '',
-    societies: '',
-    requests: '',
-    accounts: ''
-  };
+    activePage: 1
+  }
 
   //==========================================================================
   static async getInitialProps() {
@@ -40,53 +37,36 @@ class AdminIndex extends Component {
       })
     );
 
-    return { societies, requests, gvconomy, accounts };
-
-    // this.setState({
-    //   requests: requests,
-    //   accounts: accounts,
-    //   societies: societies,
-    //   gvconomy: gvconomy
-    // });
+    return { societies, requests, gvconomy, accounts, requests_length };
   }
   //=============================================================================
+  handlePaginationChange = (e, { activePage }) => this.setState({ activePage })
 
-  renderRequests() {
-    const items = this.props.requests.map(request => {
-      return {
-        header: request[2],
-        description: ([
-          "Quantia: ", request[1], <br/>,
-          "Descrição: ", request[0]]
-        ),
-        fluid: true 
-      };
-    });
-
-    return <Card.Group items={items} />;
-  }
-
-  renderReq() {
+  renderCards(index_2) {
     return(
       <Card.Group>
-          {this.props.requests.map((request) => (
-            <Card
-              key={request[0]}
-              header={request[2]}
-              description={
-                ["Quantia: ", request[1], <br/>,
-                  "Descrição: ", request[0]]
-              }
-              fluid={true}
-
-            />
-          ))}
+          {this.props.requests.map((request, index) => {
+            if ( (index >= index_2 - 1 && index <= index_2) || (index_2 == 1 && index < index_2 + 1 ) ) {
+              return ( 
+              <Card fluid>
+                <Card.Content>
+                  <Card.Header>{request[2]}</Card.Header>
+                  <Card.Description>
+                  {"Quantia: "} {request[1]} {<br/>}
+                  {"Descrição: "} {request[0]}
+                  </Card.Description>
+                  <Button basic color="green">Aprovar</Button>
+                </Card.Content>
+              </Card>
+              );
+            }
+          })}
       </Card.Group>
     );
   }
 
-
   render() {
+    const { activePage } = this.state
     return (
       <Layout>
         <div>
@@ -95,7 +75,18 @@ class AdminIndex extends Component {
                 <Grid.Row>
                     <Grid.Column width={10}>
                       <h3 style={{ color: "white" }}>Requisições de GvCoins: </h3>
-                        {this.renderReq()}
+                        {this.renderCards(activePage)}
+                        <br/>
+                        <Pagination
+                          defaultActivePage={this.state.activePage} 
+                          ellipsisItem={{ content: <Icon name='ellipsis horizontal' />, icon: true }}
+                          firstItem={{ content: <Icon name='angle double left' />, icon: true }}
+                          lastItem={{ content: <Icon name='angle double right' />, icon: true }}
+                          prevItem={{ content: <Icon name='angle left' />, icon: true }}
+                          nextItem={{ content: <Icon name='angle right' />, icon: true }}
+                          totalPages={this.props.requests_length - 1}
+                          onPageChange={this.handlePaginationChange}
+                        />
                     </Grid.Column>
 
                     <Grid.Column width={6}>
