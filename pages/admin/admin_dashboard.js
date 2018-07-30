@@ -1,20 +1,22 @@
 import React, { Component } from 'react';
-import { Card, Button, Form, Input, Message, Grid, Pagination, Icon } from 'semantic-ui-react';
+import { Card, Button, Form, Input, Message, Grid, Pagination, Icon, Table } from 'semantic-ui-react';
 import Layout from '../../components/Layout';
 import { Link, Router } from '../../routes';
 import web3 from '../../ethereum/web3';
 import gvcoin from '../../ethereum/gvcoin';
-import RequestForm from '../../components/RequestForm';
-import TransferForm from '../../components/TransferForm';
-import Plot from '../../components/Plot';
+import PlotSeriesFin from '../../components/PlotSeriesFin';
+import PlotSeriesRev from '../../components/PlotSeriesRev';
 import CreateSocietyForm from '../../components/CreateSocietyForm';
 
 class AdminIndex extends Component {
   state = {
-    activePage: 1
+    activePage: 1,
+    errorMessage: '',
+    loading: false,
+    society_chosen: '',
+    choice: 1
   }
 
-  //==========================================================================
   static async getInitialProps() {
     const accounts = await web3.eth.getAccounts();
     const gvconomy = await gvcoin.methods.gvconomy().call();
@@ -37,10 +39,50 @@ class AdminIndex extends Component {
       })
     );
 
-    return { societies, requests, gvconomy, accounts, requests_length };
+    const revSeries = await Promise.all(
+      Array(parseInt(societies_length))
+      .fill()
+      .map((element, index) => {
+        return gvcoin.methods.getRev(societies[index].name).call();
+      })
+    );
+
+    const finSeries = await Promise.all(
+      Array(parseInt(societies_length))
+      .fill()
+      .map((element, index) => {
+        return gvcoin.methods.getFin(societies[index].name).call();
+      })
+    );
+
+    return { societies, requests, gvconomy, accounts, requests_length, revSeries, finSeries };
   }
   //=============================================================================
-  handlePaginationChange = (e, { activePage }) => this.setState({ activePage })
+  // General functions for GvCoin's Admin Dashboard
+  //=============================================================================
+  handlePaginationChange = (e, { activePage }) => this.setState({ activePage });
+
+  graphChange = async event => {
+    event.preventDefault();
+    this.setState({ choice: this.state.choice*(-1) });
+  };
+
+  async onApprove (request, index, e){
+    e.preventDefault();
+    this.setState({ loading: true, errorMessage: '' });
+    try {
+      const accounts = await web3.eth.getAccounts();
+      await gvcoin.methods.approveRequest( index, request[3],request[1]).send({
+        from: accounts[0]
+      });
+
+      Router.replaceRoute(`/admin/admin_dashboard`);
+    } catch (err) {
+      this.setState({ errorMessage: err.message });
+    }
+
+    this.setState({ loading: false, value: '', description: '' });
+  };
 
   renderCards(index_2) {
     return(
@@ -50,12 +92,16 @@ class AdminIndex extends Component {
               return ( 
               <Card fluid>
                 <Card.Content>
-                  <Card.Header>{request[2]}</Card.Header>
+                  <Card.Header>{request[3]}</Card.Header>
                   <Card.Description>
                   {"Quantia: "} {request[1]} {<br/>}
                   {"Descrição: "} {request[0]}
                   </Card.Description>
-                  <Button basic color="green">Aprovar</Button>
+                  {request.accepted ? <Button basic color="violet" loading={this.state.loading}>Aprovada!</Button> : (
+                    <Button basic color="green" onClick={(e) => this.onApprove(request, index, e)}>
+                      Aprovar
+                    </Button>
+                  )}
                 </Card.Content>
               </Card>
               );
@@ -65,8 +111,38 @@ class AdminIndex extends Component {
     );
   }
 
+  renderSocieties() {
+    return(
+      <Card.Group>
+        {this.props.societies.map((society) => {
+          return(
+            <Card>
+              <Card.Content>
+                <Card.Header>{society[3]}</Card.Header>
+                <Card.Description>
+                  {"Riqueza: "} {society[0]} {<br/>}
+                  {"Receita Total: "} {society[1]} {<br/>}
+                  {"Total Financiado: "} {society[2]}
+                </Card.Description>
+              </Card.Content>
+            </Card>
+          );
+        })}
+      </Card.Group>
+    );
+  }
+
+  renderGraph(chosen) {
+    if(chosen == 1){
+      return <PlotSeriesRev revSeries={this.props.revSeries} societies={this.state.society_chosen}/>;
+    }else {
+      return <PlotSeriesFin finSeries={this.props.finSeries} society={this.state.society_chosen}/>;
+    }
+  }
+  //================================================================================
+
   render() {
-    const { activePage } = this.state
+    const { activePage, choice, society_chosen } = this.state
     return (
       <Layout>
         <div>
@@ -97,15 +173,14 @@ class AdminIndex extends Component {
                 <Grid.Row>
                   <Grid.Column width={10}>
                     <h3 style={{ color: "white" }}>Estatísticas</h3>
-
-                    <Plot/>
-
+                     {this.renderGraph(choice)}
+                     <br/>
+                      <Button color="violet" onClick={this.graphChange}>Trocar</Button>
                   </Grid.Column>
-
+                      
                   <Grid.Column width={6}>
-
-                    <TransferForm/>
-
+                    <h3 style={{ color: "white" }}>Lista de Entidades: </h3>
+                    {this.renderSocieties()}
                   </Grid.Column>
                 </Grid.Row>                
             </Grid>

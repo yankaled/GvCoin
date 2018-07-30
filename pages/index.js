@@ -34,7 +34,7 @@ class GvCoinIndex extends Component {
             />
             <Button color="violet">Enviar</Button>
           </Form>
-
+          <img src="/static/logo_2.png" alt="my image"/>
         </div>
       </Layout>
     );

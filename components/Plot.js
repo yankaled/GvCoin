@@ -33,7 +33,8 @@ class App extends Component {
                     }
                 }
             ]}
-            layout={{width: 600, height: 300, title: 'GvConomy', xaxis: { showticklabels: false }, yaxis: { showticklabels: false }}}
+            layout={{width: 600, height: 300, title: 'GvConomy', xaxis: { showticklabels: false, showgrid: false }, 
+            yaxis: { showticklabels: false, showgrid:false }}}
         />
         );
     }

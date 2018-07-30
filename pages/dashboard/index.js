@@ -16,25 +16,6 @@ class GvCoinIndex extends Component {
     name: ''
   };
 
-  //===================================================================================
-  //Instead of getInitialProps(), we shall use componentDidMount()
-  //for rendering the stuff we want as the user changes metamask accounts
-  //===================================================================================
-  // static async getInitialProps(props) {
-  //   const accounts = await web3.eth.getAccounts();
-  //   const society_index = await gvcoin.methods.getSocietyByAddress(accounts[0]).call();
-  //   const societies = await gvcoin.methods.societies(society_index).call();
-  //   const gvconomy = await gvcoin.methods.gvconomy().call();
-
-  //   return {
-  //     address: societies.society_address,
-  //     wealth: societies.wealth,
-  //     gvconomy: gvconomy,
-  //     name: societies.name
-  //   };
-  // }
-  //====================================================================================
-
   async componentDidMount() {
     const accounts = await web3.eth.getAccounts();
     const society_index = await gvcoin.methods.getSocietyByAddress(accounts[0]).call();
@@ -85,7 +66,7 @@ class GvCoinIndex extends Component {
   render() {
     return (
       <Layout>
-        <div>
+        <div id="root">
           <h2 style={{ color: "#ffffff"}}>{this.state.name}</h2>
             <Grid>
                 <Grid.Row>

@@ -23,7 +23,7 @@ class CreateSocietyForm extends Component {
           from: accounts[0]
         });
   
-        Router.replaceRoute(`/admin/dashboard_admin`);
+        Router.replaceRoute(`/admin/admin_dashboard`);
       } catch (err) {
         this.setState({ errorMessage: err.message });
       }

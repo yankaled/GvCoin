@@ -1,6 +1,3 @@
-//LTR HEROKU LTR
-//==============
-
 const { createServer } = require('http');
 const next = require('next');
 
