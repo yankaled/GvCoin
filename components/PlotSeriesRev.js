@@ -23,7 +23,7 @@ class App extends Component {
                     }                
                 }
             ]}
-            layout={{width: 600, height: 300, title: 'GvConomy - Série de Receitas', xaxis: { showticklabels: true, showgrid: true }, 
+            layout={{width: 600, height: 300, title: 'GvConomy - Série de Receitas:', xaxis: { showticklabels: true, showgrid: true }, 
             yaxis: { showticklabels: true, showgrid:true }}}
         />
         );
