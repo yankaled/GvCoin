@@ -12,8 +12,8 @@ class App extends Component {
         <Plot
             data={[
                 {
-                    x: Array(this.props.revSeries[1].length).fill().map((element, index) => index + 1), //should be max length - > fix
-                    y: this.props.revSeries[1].map(function(x){return parseInt(x)}),
+                    x: Array(this.props.revSeries[this.props.society_index].length).fill().map((element, index) => index + 1), //should be max length - > fix
+                    y: this.props.revSeries[this.props.society_index].map(function(x){return parseInt(x)}),
                     mode: 'line',
                     name: 'Série Temporal de Receitas',
                     marker: {

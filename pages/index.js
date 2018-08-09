@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
-import { Card, Button, Form, Message } from 'semantic-ui-react';
+import { Button, Form } from 'semantic-ui-react';
 import Layout from '../components/Layout';
-import { Link, Router } from '../routes';
+import { Router } from '../routes';
 
 class GvCoinIndex extends Component {
   state = {
@@ -34,7 +34,9 @@ class GvCoinIndex extends Component {
             />
             <Button color="violet">Enviar</Button>
           </Form>
-          <img src="/static/logo_2.png" alt="my image"/>
+          <div className="codeLogoLanding">
+            <img src="/static/logo_2.png" alt="my image"/>
+          </div>  
         </div>
       </Layout>
     );

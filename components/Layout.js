@@ -1,18 +1,19 @@
 import React from 'react';
-import { Container } from 'semantic-ui-react';
+import { Container, Grid } from 'semantic-ui-react';
 import Head from 'next/head';
 import Header from './Header';
+import Footer from './Footer';
 
 export default props => {
   return (
     <div>  
-      <div>
+      <div style={{ width: "100%" }}>
         <Header />
       </div>
 
       <Container fluid style={{ marginTop: "10px" }}>
       {/* Heads up! We apply there some custom styling, you usually will not need it. */}
-        <style>{`
+        <style>{`Grid
           html, body {
             background-color: #252839 !important;
           }
@@ -29,6 +30,11 @@ export default props => {
             opacity: 0.4;
             text-align: center;
           }
+
+          .codeLogoLanding img {
+            width: auto;
+            height: auto;
+          }
         }
         `}</style>
         <Head>
@@ -40,6 +46,9 @@ export default props => {
         <Container>
           {props.children}
         </Container>
+        <div style={{ width: "100%" }}>
+          <Footer />
+        </div>
       </Container>
     </div>
   );

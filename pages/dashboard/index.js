@@ -62,7 +62,7 @@ class GvCoinIndex extends Component {
 
     return <Card.Group items={items} />;
   }
-
+//Rendered with a trick to simulate a footer
   render() {
     return (
       <Layout>
@@ -89,7 +89,14 @@ class GvCoinIndex extends Component {
                   <Grid.Column width={6}>
                     <TransferForm/>
                   </Grid.Column>
-                </Grid.Row>                
+                </Grid.Row>
+
+                <Grid.Row>
+                </Grid.Row>
+                <Grid.Row>
+                </Grid.Row>
+                <Grid.Row>
+                </Grid.Row>                   
             </Grid>
         </div>
       </Layout>

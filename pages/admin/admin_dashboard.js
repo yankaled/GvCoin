@@ -13,6 +13,8 @@ class AdminIndex extends Component {
     activePage: 1,
     errorMessage: '',
     loading: false,
+    society_chosen_name: 'GvCode',
+    societies_chosen_num: 0,
     society_chosen: '',
     choice: 1
   }
@@ -39,6 +41,8 @@ class AdminIndex extends Component {
       })
     );
 
+    const societies_names = Array(parseInt(societies.length)).fill().map((element, index) => {return societies[index].name})
+
     const revSeries = await Promise.all(
       Array(parseInt(societies_length))
       .fill()
@@ -55,7 +59,7 @@ class AdminIndex extends Component {
       })
     );
 
-    return { societies, requests, gvconomy, accounts, requests_length, revSeries, finSeries };
+    return { societies, requests, gvconomy, accounts, requests_length, revSeries, finSeries, societies_names };
   }
   //=============================================================================
   // General functions for GvCoin's Admin Dashboard
@@ -65,6 +69,16 @@ class AdminIndex extends Component {
   graphChange = async event => {
     event.preventDefault();
     this.setState({ choice: this.state.choice*(-1) });
+  };
+
+  onSocietyChange = async event => {
+    event.preventDefault();
+    try {
+      const societies_chosen_num = this.props.societies_names.indexOf(this.state.society_chosen_name);
+      this.setState({ societies_chosen_num });
+    }catch(err){
+      console.log(err);
+    }
   };
 
   async onApprove (request, index, e){
@@ -134,15 +148,18 @@ class AdminIndex extends Component {
 
   renderGraph(chosen) {
     if(chosen == 1){
-      return <PlotSeriesRev revSeries={this.props.revSeries} societies={this.state.society_chosen}/>;
+      return <PlotSeriesRev revSeries={this.props.revSeries} society_index={this.state.societies_chosen_num}/>;
     }else {
-      return <PlotSeriesFin finSeries={this.props.finSeries} society={this.state.society_chosen}/>;
+      return <PlotSeriesFin finSeries={this.props.finSeries} society_index={this.state.societies_chosen_num}/>;
     }
   }
+
+  //================================================================================
+  // Now we output the components and results
   //================================================================================
 
   render() {
-    const { activePage, choice, society_chosen } = this.state
+    const { activePage, choice, society_chosen, societies_chosen_num, society_chosen_name } = this.state
     return (
       <Layout>
         <div>
@@ -173,7 +190,21 @@ class AdminIndex extends Component {
                 <Grid.Row>
                   <Grid.Column width={10}>
                     <h3 style={{ color: "white" }}>Estatísticas</h3>
-                     {this.renderGraph(choice)}
+
+                    <Form onSubmit={this.onSocietyChange} error={!!this.state.errorMessage}>
+                          <Input
+                              value={society_chosen_name}
+                              onChange={event => this.setState({ society_chosen_name: event.target.value })}
+                              placeholder='Nome da entidade'
+                          />
+                          <Message error header="Oops!" content={this.state.errorMessage} />
+                          <Button color ="violet" >
+                            Consultar
+                          </Button>
+                    </Form>
+                    <br/>
+
+                     {this.renderGraph(choice, societies_chosen_num)}
                      <br/>
                       <Button color="violet" onClick={this.graphChange}>Trocar</Button>
                   </Grid.Column>
@@ -182,6 +213,8 @@ class AdminIndex extends Component {
                     <h3 style={{ color: "white" }}>Lista de Entidades: </h3>
                     {this.renderSocieties()}
                   </Grid.Column>
+                </Grid.Row>
+                <Grid.Row>
                 </Grid.Row>                
             </Grid>
         </div>
