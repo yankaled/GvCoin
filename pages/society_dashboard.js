@@ -1,12 +1,11 @@
 import React, { Component } from 'react';
 import { Card, Button, Form, Input, Message, Grid } from 'semantic-ui-react';
-import Layout from '../../components/Layout';
-import { Link, Router } from '../../routes';
-import web3 from '../../ethereum/web3';
-import gvcoin from '../../ethereum/gvcoin';
-import RequestForm from '../../components/RequestForm';
-import TransferForm from '../../components/TransferForm';
-import Plot from '../../components/Plot';
+import Layout from '../components/Layout';
+import web3 from '../ethereum/web3';
+import gvcoin from '../ethereum/gvcoin';
+import RequestForm from '../components/RequestForm';
+import TransferForm from '../components/TransferForm';
+import Plot from '../components/Plot';
 
 class GvCoinIndex extends Component {
   state = {

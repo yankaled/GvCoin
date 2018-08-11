@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
 import { Card, Button, Form, Input, Message, Grid, Pagination, Icon, Table } from 'semantic-ui-react';
-import Layout from '../../components/Layout';
-import { Link, Router } from '../../routes';
-import web3 from '../../ethereum/web3';
-import gvcoin from '../../ethereum/gvcoin';
-import PlotSeriesFin from '../../components/PlotSeriesFin';
-import PlotSeriesRev from '../../components/PlotSeriesRev';
-import CreateSocietyForm from '../../components/CreateSocietyForm';
+import Layout from '../components/Layout';
+import { Link, Router } from '../routes';
+import web3 from '../ethereum/web3';
+import gvcoin from '../ethereum/gvcoin';
+import PlotSeriesFin from '../components/PlotSeriesFin';
+import PlotSeriesRev from '../components/PlotSeriesRev';
+import CreateSocietyForm from '../components/CreateSocietyForm';
 
 class AdminIndex extends Component {
   state = {

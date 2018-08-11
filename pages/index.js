@@ -11,9 +11,9 @@ class GvCoinIndex extends Component {
   onSubmit = async event => {
     event.preventDefault();
     if( this.state.access_token == "IMQ" ){
-      Router.pushRoute(`/admin/admin_dashboard`);
+      Router.pushRoute(`/admin_dashboard`);
     }else if( this.state.access_token == "GvCode") {
-      Router.pushRoute(`/dashboard/index`);
+      Router.pushRoute(`/society_dashboard`);
     };
 
   };
