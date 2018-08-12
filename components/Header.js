@@ -1,10 +1,16 @@
 import React, { Component } from 'react'
 import { Menu } from 'semantic-ui-react'
+import { Router } from '../routes';
 
 export default class HeaderContentProp extends Component {
   state = {}
 
   handleItemClick = (e, { name }) => this.setState({ activeItem: name })
+
+  backToLanding = async event => {
+    event.preventDefault();
+    Router.pushRoute(`/`);
+  };
 
   render() {
     const { activeItem } = this.state
@@ -13,6 +19,12 @@ export default class HeaderContentProp extends Component {
       <Menu style={{ borderRadius: '0px' }}>
         <img src="/static/logo_2.png" alt="my image" height="80" width="114"/>
         <Menu.Item/>
+        <Menu.Item target='_blank'
+          name='landing'
+          active={activeItem === 'landing'}
+          content='Landing'
+          onClick={this.backToLanding}
+        />
         <Menu.Item href='http://gvcode.com.br/' target='_blank'
           name='gvcode'
           active={activeItem === 'gvcode'}

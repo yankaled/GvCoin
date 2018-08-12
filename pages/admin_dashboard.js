@@ -24,6 +24,8 @@ class AdminIndex extends Component {
     const gvconomy = await gvcoin.methods.gvconomy().call();
     const requests_length = await gvcoin.methods.getRequestsLength().call();
     const societies_length = await gvcoin.methods.getSocietiesLength().call();
+    const net = await web3.eth.net.getNetworkType();
+    console.log(net);
 
     const requests = await Promise.all(
       Array(parseInt(requests_length))
