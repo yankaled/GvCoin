@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Card, Button, Form, Input, Message, Grid, Pagination, Icon, Table } from 'semantic-ui-react';
+import { Card, Button, Form, Input, Message, Grid, Pagination, Icon, Modal, Header } from 'semantic-ui-react';
 import Layout from '../components/Layout';
 import { Link, Router } from '../routes';
 import web3 from '../ethereum/web3';
@@ -16,7 +16,8 @@ class AdminIndex extends Component {
     society_chosen_name: 'GvCode',
     societies_chosen_num: 0,
     society_chosen: '',
-    choice: 1
+    choice: 1,
+    bug_modal: false
   }
 
   static async getInitialProps() {
@@ -24,8 +25,6 @@ class AdminIndex extends Component {
     const gvconomy = await gvcoin.methods.gvconomy().call();
     const requests_length = await gvcoin.methods.getRequestsLength().call();
     const societies_length = await gvcoin.methods.getSocietiesLength().call();
-    const net = await web3.eth.net.getNetworkType();
-    console.log(net);
 
     const requests = await Promise.all(
       Array(parseInt(requests_length))
@@ -63,9 +62,11 @@ class AdminIndex extends Component {
 
     return { societies, requests, gvconomy, accounts, requests_length, revSeries, finSeries, societies_names };
   }
+
   //=============================================================================
   // General functions for GvCoin's Admin Dashboard
   //=============================================================================
+
   handlePaginationChange = (e, { activePage }) => this.setState({ activePage });
 
   graphChange = async event => {
@@ -77,10 +78,39 @@ class AdminIndex extends Component {
     event.preventDefault();
     try {
       const societies_chosen_num = this.props.societies_names.indexOf(this.state.society_chosen_name);
-      this.setState({ societies_chosen_num });
+
+      if(societies_chosen_num < 0 || typeof societies_chosen_num != "number"){
+        this.setState({ bug_modal: true });
+      }else{
+        this.setState({ societies_chosen_num });
+      }
     }catch(err){
       console.log(err);
     }
+  };
+
+  renderModal(open) {
+    return(
+      <Modal open={open} basic>
+        <Header icon='exclamation circle' content='Entidade não encontrada!' />
+        <Modal.Content>
+          <h3>
+            Entre com o nome de uma entidade cadastrada!
+          </h3>
+        </Modal.Content>
+        <Modal.Actions>
+          <Button onClick={this.handleClick} color='red'>
+            <Icon name='remove' /> Fechar
+          </Button>
+        </Modal.Actions>
+      </Modal>
+    );
+  };
+
+  handleClick = () => {
+    this.setState({
+      bug_modal: false
+    });
   };
 
   async onApprove (request, index, e){
@@ -92,7 +122,7 @@ class AdminIndex extends Component {
         from: accounts[0]
       });
 
-      Router.replaceRoute(`/admin/admin_dashboard`);
+      Router.replaceRoute(`/admin_dashboard`);
     } catch (err) {
       this.setState({ errorMessage: err.message });
     }
@@ -161,7 +191,7 @@ class AdminIndex extends Component {
   //================================================================================
 
   render() {
-    const { activePage, choice, society_chosen, societies_chosen_num, society_chosen_name } = this.state
+    const { activePage, choice, societies_chosen_num, society_chosen_name } = this.state
     return (
       <Layout>
         <div>
@@ -204,6 +234,8 @@ class AdminIndex extends Component {
                             Consultar
                           </Button>
                     </Form>
+
+                    {this.renderModal(this.state.bug_modal)}
                     <br/>
 
                      {this.renderGraph(choice, societies_chosen_num)}

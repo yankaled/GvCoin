@@ -22,12 +22,15 @@ class GvCoinIndex extends Component {
 
   onSubmit = async event => {
     event.preventDefault();
-    if( this.state.access_token == "IMQ" ){
-      Router.pushRoute(`/admin_dashboard`);
-    }else if( this.state.access_token == "GvCode") {
-      Router.pushRoute(`/society_dashboard`);
+    if(this.state.net == 'rinkeby'){
+      if( this.state.access_token == "IMQ" ){
+        Router.pushRoute(`/admin_dashboard`);
+      }else if( this.state.access_token == "GvCode") {
+        Router.pushRoute(`/society_dashboard`);
+      };
+    } else {
+      this.setState({ open_modal: true });
     };
-
   };
 
   handleClick = () => {
@@ -42,7 +45,7 @@ class GvCoinIndex extends Component {
         <Header icon='exclamation circle' content='Rinkeby não encontrada!' />
         <Modal.Content>
           <h3>
-          Ooi! Para usar a GvCoin você precisa do plugin Metamask. <br/> 
+          Oooi! Para usar a GvCoin você precisa do plugin Metamask. <br/> 
           Não se esqueça de selecionar a rede "Rinkeby" no Metamask para a GvCoin funcionar ;)
           </h3>
         </Modal.Content>

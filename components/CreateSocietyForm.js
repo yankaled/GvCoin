@@ -15,7 +15,7 @@ class CreateSocietyForm extends Component {
     onSubmit = async event => {
       event.preventDefault();
       this.setState({ loading: true, errorMessage: '' });
-      const { name, address} = this.state;
+      const { name, address } = this.state;
   
       try {
         const accounts = await web3.eth.getAccounts();
@@ -23,7 +23,7 @@ class CreateSocietyForm extends Component {
           from: accounts[0]
         });
   
-        Router.replaceRoute(`/admin/admin_dashboard`);
+        Router.replaceRoute(`/admin_dashboard`);
       } catch (err) {
         this.setState({ errorMessage: err.message });
       }
@@ -51,7 +51,10 @@ class CreateSocietyForm extends Component {
               />
           </Form.Field>
   
-          <Message error header="Oops!" content={this.state.errorMessage} />
+          <Message error header="Oops, ocorreu um erro na transação!" >
+          <h4 style={{ color: '#8b0000' }}>Oops! Ocorreu um erro na transação: </h4>
+          {this.state.errorMessage}
+          </Message>
           <Button color ="violet" loading={this.state.loading}>
             Enviar
           </Button>

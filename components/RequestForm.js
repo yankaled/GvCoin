@@ -23,7 +23,7 @@ class RequestForm extends Component {
         from: accounts[0]
       });
 
-      Router.replaceRoute(`/dashboard/index`);
+      Router.replaceRoute(`/society_dashboard`);
     } catch (err) {
       this.setState({ errorMessage: err.message });
     }
@@ -51,7 +51,10 @@ class RequestForm extends Component {
             />
         </Form.Field>
 
-        <Message error header="Oops!" content={this.state.errorMessage} />
+        <Message error header="Oops, ocorreu um erro na transação!" >
+          <h4 style={{ color: '#8b0000' }}>Oops! Ocorreu um erro na transação: </h4>
+          {this.state.errorMessage}
+        </Message>
         <Button color ="violet" loading={this.state.loading}>
           Enviar
         </Button>

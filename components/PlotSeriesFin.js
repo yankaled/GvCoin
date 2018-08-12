@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import dynamic from 'next/dynamic'
-import gvcoin from '../ethereum/gvcoin';
 
 const Plot = dynamic(import('react-plotly.js'), {
     ssr: false
