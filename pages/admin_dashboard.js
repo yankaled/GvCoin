@@ -143,8 +143,8 @@ class AdminIndex extends Component {
                   {"Quantia: "} {request[1]} {<br/>}
                   {"Descrição: "} {request[0]}
                   </Card.Description>
-                  {request.accepted ? <Button basic color="violet" loading={this.state.loading}>Aprovada!</Button> : (
-                    <Button basic color="green" onClick={(e) => this.onApprove(request, index, e)}>
+                  {request.accepted ? <Button basic color="violet">Aprovada!</Button> : (
+                    <Button basic color="green" loading={this.state.loading} onClick={(e) => this.onApprove(request, index, e)}>
                       Aprovar
                     </Button>
                   )}
