@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Menu } from 'semantic-ui-react'
+import { Menu, MenuItem } from 'semantic-ui-react'
 import { Router } from '../routes';
 
 export default class HeaderContentProp extends Component {
@@ -16,9 +16,8 @@ export default class HeaderContentProp extends Component {
     const { activeItem } = this.state
 
     return (
-      <Menu style={{ borderRadius: '0px' }}>
+      <Menu fluid widths={7} style={{ borderRadius: '0px' }}>
         <img src="/static/logo_2.png" alt="my image" height="80" width="114"/>
-        <Menu.Item/>
         <Menu.Item target='_blank'
           name='landing'
           active={activeItem === 'landing'}
@@ -32,14 +31,14 @@ export default class HeaderContentProp extends Component {
           onClick={this.handleItemClick}
         />
 
-        <Menu.Item href='https://eaesp.fgv.br/escola/departamentos/imqaa' target='_blank'
-          name='imq'
-          active={activeItem === 'imq'}
-          content='IMQ'
+        <Menu.Item href='https://eaesp.fgv.br/departamentos/departamento-tecnologia-e-ciencia-dados' target='_blank'
+          name='tds'
+          active={activeItem === 'tds'}
+          content='TDS'
           onClick={this.handleItemClick}
         />
 
-        <Menu.Item href='https://eaesp.fgv.br/departamentos/departamento-administracao-producao-e-operacoes' target='_blank'
+        <Menu.Item href='https://eaesp.fgv.br/escola/departamentos/APOI' target='_blank'
           name='poi'
           active={activeItem === 'poi'}
           content='POI'
@@ -51,6 +50,12 @@ export default class HeaderContentProp extends Component {
           active={activeItem === 'fgv'}
           content='FGV'
           onClick={this.handleItemClick}
+        />
+        <Menu.Item href='https://metamask.io/' target='_blank'
+        name='Metamask'
+        active={activeItem === 'Metamask'}
+        content='Metamask'
+        onClick={this.handleItemClick}
         />
       </Menu>
     )

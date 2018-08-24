@@ -59,8 +59,8 @@ class RequestForm extends Component {
           <h4 style={{ color: '#8b0000' }}>Oops! Ocorreu um erro na transação: </h4>
           {this.state.errorMessage}
         </Message>
-        <Button color ="blue" loading={this.state.loading}>
-          Enviar
+        <Button color ="violet" loading={this.state.loading}>
+          Transferir
         </Button>
       </Form>
     );

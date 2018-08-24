@@ -213,11 +213,28 @@ class AdminIndex extends Component {
                           onPageChange={this.handlePaginationChange}
                         />
                     </Grid.Column>
+                  </Grid.Row>
 
-                    <Grid.Column width={6}>
-                      <CreateSocietyForm/>
-                    </Grid.Column>
+                  <Grid.Row>
                 </Grid.Row>
+
+                <Grid.Row width={6}>
+                      <CreateSocietyForm/>
+                    </Grid.Row>
+
+                  <Grid.Row>
+                </Grid.Row>
+
+                 <Grid.Row width={6}>
+                    <h3 style={{ color: "white" }}>Lista de Entidades: </h3>
+                  </Grid.Row>
+                  <Grid.Row>
+                    {this.renderSocieties()}
+                  </Grid.Row>
+
+                  <Grid.Row>
+                </Grid.Row>
+                
 
                 <Grid.Row>
                   <Grid.Column width={10}>
@@ -242,11 +259,7 @@ class AdminIndex extends Component {
                      <br/>
                       <Button color="violet" onClick={this.graphChange}>Trocar</Button>
                   </Grid.Column>
-                      
-                  <Grid.Column width={6}>
-                    <h3 style={{ color: "white" }}>Lista de Entidades: </h3>
-                    {this.renderSocieties()}
-                  </Grid.Column>
+
                 </Grid.Row>
                 <Grid.Row>
                 </Grid.Row>                

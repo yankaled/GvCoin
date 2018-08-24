@@ -45,7 +45,9 @@ class GvCoinIndex extends Component {
         <Header icon='exclamation circle' content='Rinkeby não encontrada!' />
         <Modal.Content>
           <h3>
-          Oooi! Para usar a GvCoin você precisa do plugin Metamask. <br/> 
+          Oooi! Para usar a GvCoin você precisa do plugin Metamask. <br/> <br/> 
+          Para habilitar o Metamask no seu navegador clique no container 
+          do canto direito da página e siga as intruções. <br/> <br/>
           Não se esqueça de selecionar a rede "Rinkeby" no Metamask para a GvCoin funcionar ;)
           </h3>
         </Modal.Content>
@@ -71,7 +73,10 @@ class GvCoinIndex extends Component {
              onChange={event =>
               this.setState({ access_token: event.target.value })} 
             />
-            <Button color="violet">Enviar</Button>
+            <Button animated='fade' positive>
+      <Button.Content visible> Validar token de acesso </Button.Content>
+      <Button.Content hidden>Comece sua experiência</Button.Content>
+    </Button>
           </Form>
           {this.renderModal(this.state.open_modal)}
           <div className="codeLogoLanding">

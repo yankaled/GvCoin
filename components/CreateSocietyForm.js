@@ -56,7 +56,7 @@ class CreateSocietyForm extends Component {
           {this.state.errorMessage}
           </Message>
           <Button color ="violet" loading={this.state.loading}>
-            Enviar
+            Criar
           </Button>
         </Form>
       );

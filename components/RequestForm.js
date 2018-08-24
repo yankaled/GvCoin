@@ -55,8 +55,9 @@ class RequestForm extends Component {
           <h4 style={{ color: '#8b0000' }}>Oops! Ocorreu um erro na transação: </h4>
           {this.state.errorMessage}
         </Message>
-        <Button color ="violet" loading={this.state.loading}>
-          Enviar
+        <Button color ="violet" animated='fade' loading={this.state.loading}>
+          <Button.Content visible> Requisitar GvCoins </Button.Content>
+          <Button.Content hidden>Confirmar requisito</Button.Content>
         </Button>
       </Form>
     );

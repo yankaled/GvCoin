@@ -8,9 +8,9 @@ export default class HeaderContentProp extends Component {
 
   render() {
     const { activeItem } = this.state
-
-    return (
-      <Menu inverted stackable borderless style={{ borderRadius: '0px' }}>
+    
+   return (
+       <Menu inverted stackable borderless style={{ borderRadius: '0px' }}>
         <img src="/static/logo_2.png" alt="my image" height="80" width="114"/>
         <Menu.Item/>
         <Menu.Item href='http://gvcode.com.br/' target='_blank'

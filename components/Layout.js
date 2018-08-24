@@ -11,7 +11,7 @@ export default props => {
         <Header />
       </div>
 
-      <Container fluid style={{ marginTop: "10px" }}>
+      <Container style={{ marginTop: "10px" }}>
         <style>{`Grid
           html, body {
             background-color: #252839 !important;

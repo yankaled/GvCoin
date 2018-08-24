@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Card, Button, Form, Input, Message, Grid } from 'semantic-ui-react';
+import { Card, Button, Form, Input, Message, Grid, GridRow } from 'semantic-ui-react';
 import Layout from '../components/Layout';
 import web3 from '../ethereum/web3';
 import gvcoin from '../ethereum/gvcoin';
@@ -66,27 +66,41 @@ class GvCoinIndex extends Component {
     return (
       <Layout>
         <div id="root">
-          <h2 style={{ color: "#ffffff"}}>{this.state.name}</h2>
+          <h2 style={{ color: "#ffffff"}}>Bem vindo {this.state.name}!</h2>
+          <Grid>
+            <Grid.Row>
+                </Grid.Row>
+          </Grid>
+
             <Grid>
                 <Grid.Row>
                     <Grid.Column width={10}>
                       <h3 style={{ color: "white" }}>Dados da Entidade</h3>
                       {this.renderCards()}
                     </Grid.Column>
+                </Grid.Row>
 
-                    <Grid.Column width={6}>
-                      <RequestForm/>
-                    </Grid.Column>
+                <Grid.Row>
+                </Grid.Row>
+
+                <Grid.Row width={6}>
+                  <RequestForm/>
+                </Grid.Row>
+
+                <Grid.Row>
+                </Grid.Row>
+
+                  <Grid.Row width={6}>
+                  <TransferForm/>
+                </Grid.Row>
+
+                <Grid.Row>
                 </Grid.Row>
 
                 <Grid.Row>
                   <Grid.Column width={10}>
                     <h3 style={{ color: "white" }}>Estatísticas</h3>
                     <Plot parameter_1={this.state.gvconomy} parameter_2={this.state.wealth}/>
-                  </Grid.Column>
-
-                  <Grid.Column width={6}>
-                    <TransferForm/>
                   </Grid.Column>
                 </Grid.Row>
 
