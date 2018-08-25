@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Button, Form, Header, Icon, Modal, Responsive } from 'semantic-ui-react';
+import { Button, Form, Header, Icon, Modal, Grid, Responsive } from 'semantic-ui-react';
 import Layout from '../components/Layout';
 import { Router } from '../routes';
 import web3 from '../ethereum/web3';
@@ -63,30 +63,41 @@ class GvCoinIndex extends Component {
   render() {
     return (
       <Layout>
-        <div>
-          <h2 style={{ color: "#ffffff"}}>GvCoin</h2>
-          <Form onSubmit={this.onSubmit}>
-            <h3 style={{ color: "#ffffff"}}> Token de Acesso: </h3>
-            <Form.Input
-             placeholder='Insira o token para entrar no sistema'
-             value={this.state.access_token}
-             onChange={event =>
-              this.setState({ access_token: event.target.value })} 
-            />
-            <Button animated='fade' positive>
-              <Button.Content visible> Validar token de acesso </Button.Content>
-              <Button.Content hidden>Começar</Button.Content>
-            </Button>
-          </Form>
-          {this.renderModal(this.state.open_modal)}
-          <Responsive maxWidth={1200}>
-            <img src="/static/logo_2.png" alt="my image" height="640" width="912"/>
-          </Responsive>
+        <Grid>
+          <Grid.Row>
+            <Grid.Column>
+              <h2 style={{ color: "#ffffff"}}>GvCoin</h2>
+              <Form onSubmit={this.onSubmit}>
+                <h3 style={{ color: "#ffffff"}}> Token de Acesso: </h3>
+                <Form.Input
+                placeholder='Insira o token para entrar no sistema'
+                value={this.state.access_token}
+                onChange={event =>
+                  this.setState({ access_token: event.target.value })} 
+                />
+                <Button animated='fade' positive>
+                  <Button.Content visible> Validar token de acesso </Button.Content>
+                  <Button.Content hidden>Começar</Button.Content>
+                </Button>
+              </Form>
+              {this.renderModal(this.state.open_modal)}
+            </Grid.Column>
+          </Grid.Row>
+          <Grid.Row>
+            <Grid.Column>
+              <Responsive maxWidth={1200}>
+                <img src="/static/logo_2.png" alt="my image" height="448" width="638.4"/>
+              </Responsive>
+            </Grid.Column>
 
-          <Responsive minWidth={1201}>
-            <img src="/static/logo_2.png" alt="my image"/>
-          </Responsive>
-        </div>
+            <Responsive minWidth={1600}>
+              <Grid.Column>
+                <img src="/static/logo_2.png" alt="my image"/>
+              </Grid.Column>
+            </Responsive>
+
+          </Grid.Row>
+        </Grid>
       </Layout>
     );
   }
