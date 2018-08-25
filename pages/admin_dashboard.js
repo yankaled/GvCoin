@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Card, Button, Form, Input, Message, Grid, Pagination, Icon, Modal, Header } from 'semantic-ui-react';
+import { Card, Button, Form, Input, Message, Grid, Pagination, Icon, Modal, Header, Responsive } from 'semantic-ui-react';
 import Layout from '../components/Layout';
 import { Link, Router } from '../routes';
 import web3 from '../ethereum/web3';
@@ -195,75 +195,139 @@ class AdminIndex extends Component {
     return (
       <Layout>
         <div>
-          <h2 style={{ color: "#ffffff"}}>Admin</h2>
-            <Grid>
-                <Grid.Row>
+          <Responsive minWidth={1200}>
+            <h2 style={{ color: "#ffffff"}}>Admin</h2>
+              <Grid>
+                  <Grid.Row>
+                      <Grid.Column width={10}>
+                        <h3 style={{ color: "white" }}>Requisições de GvCoins: </h3>
+                          {this.renderCards(activePage)}
+                          <br/>
+                          <Pagination
+                            defaultActivePage={this.state.activePage} 
+                            ellipsisItem={{ content: <Icon name='ellipsis horizontal' />, icon: true }}
+                            firstItem={{ content: <Icon name='angle double left' />, icon: true }}
+                            lastItem={{ content: <Icon name='angle double right' />, icon: true }}
+                            prevItem={{ content: <Icon name='angle left' />, icon: true }}
+                            nextItem={{ content: <Icon name='angle right' />, icon: true }}
+                            totalPages={this.props.requests_length - 1}
+                            onPageChange={this.handlePaginationChange}
+                          />
+                      </Grid.Column>
+
+                      <Grid.Column width={6}>
+                        <CreateSocietyForm/>
+                      </Grid.Column>
+                  </Grid.Row>
+
+                  <Grid.Row>
                     <Grid.Column width={10}>
-                      <h3 style={{ color: "white" }}>Requisições de GvCoins: </h3>
-                        {this.renderCards(activePage)}
-                        <br/>
-                        <Pagination
-                          defaultActivePage={this.state.activePage} 
-                          ellipsisItem={{ content: <Icon name='ellipsis horizontal' />, icon: true }}
-                          firstItem={{ content: <Icon name='angle double left' />, icon: true }}
-                          lastItem={{ content: <Icon name='angle double right' />, icon: true }}
-                          prevItem={{ content: <Icon name='angle left' />, icon: true }}
-                          nextItem={{ content: <Icon name='angle right' />, icon: true }}
-                          totalPages={this.props.requests_length - 1}
-                          onPageChange={this.handlePaginationChange}
-                        />
+                      <h3 style={{ color: "white" }}>Estatísticas</h3>
+
+                      <Form onSubmit={this.onSocietyChange} error={!!this.state.errorMessage}>
+                            <Input
+                                value={society_chosen_name}
+                                onChange={event => this.setState({ society_chosen_name: event.target.value })}
+                                placeholder='Nome da entidade'
+                            />
+                            <Message error header="Oops!" content={this.state.errorMessage} />
+                            <Button color ="violet" >
+                              Consultar
+                            </Button>
+                      </Form>
+
+                      {this.renderModal(this.state.bug_modal)}
+                      <br/>
+
+                      {this.renderGraph(choice, societies_chosen_num)}
+                      <br/>
+                        <Button color="violet" onClick={this.graphChange}>Trocar</Button>
+                    </Grid.Column>
+                        
+                    <Grid.Column width={6}>
+                      <h3 style={{ color: "white" }}>Lista de Entidades: </h3>
+                      {this.renderSocieties()}
                     </Grid.Column>
                   </Grid.Row>
-
                   <Grid.Row>
-                </Grid.Row>
+                  </Grid.Row>                
+              </Grid>
+        </Responsive>
 
-                <Grid.Row width={6}>
-                      <CreateSocietyForm/>
-                    </Grid.Row>
+        <Responsive maxWidth={1200}>
+          <Grid>
+            <Grid.Row>
+              <Grid.Column width={2}></Grid.Column>
+              <Grid.Column width={12}>
+                <h2 style={{ color: "#ffffff"}}>Admin</h2>
+              </Grid.Column>
+            </Grid.Row>
 
-                  <Grid.Row>
-                </Grid.Row>
+            <Grid.Row>
+              <Grid.Column width={2}></Grid.Column>
+              <Grid.Column width={12}>
+                <h3 style={{ color: "white" }}>Requisições de GvCoins: </h3>
+                  {this.renderCards(activePage)}
+                  <br/>
+                  <Pagination
+                    defaultActivePage={this.state.activePage} 
+                    ellipsisItem={{ content: <Icon name='ellipsis horizontal' />, icon: true }}
+                    firstItem={{ content: <Icon name='angle double left' />, icon: true }}
+                    lastItem={{ content: <Icon name='angle double right' />, icon: true }}
+                    prevItem={{ content: <Icon name='angle left' />, icon: true }}
+                    nextItem={{ content: <Icon name='angle right' />, icon: true }}
+                    totalPages={this.props.requests_length - 1}
+                    onPageChange={this.handlePaginationChange}
+                  />
+              </Grid.Column>
+            </Grid.Row>
 
-                 <Grid.Row width={6}>
-                    <h3 style={{ color: "white" }}>Lista de Entidades: </h3>
-                  </Grid.Row>
-                  <Grid.Row>
-                    {this.renderSocieties()}
-                  </Grid.Row>
+            <Grid.Row>
+              <Grid.Column width={2}></Grid.Column>
+              <Grid.Column width={10}>
+                <CreateSocietyForm/>
+              </Grid.Column>
+            </Grid.Row>
 
-                  <Grid.Row>
-                </Grid.Row>
-                
+            <Grid.Row>
+              <Grid.Column width={2}></Grid.Column>                    
+              <Grid.Column width={6}>
+                <h3 style={{ color: "white" }}>Lista de Entidades: </h3>
+                {this.renderSocieties()}
+              </Grid.Column> 
+            </Grid.Row>
 
-                <Grid.Row>
-                  <Grid.Column width={10}>
-                    <h3 style={{ color: "white" }}>Estatísticas</h3>
+            <Grid.Row>
+              <Grid.Column width={2}></Grid.Column>
+              <Responsive minWidth={1200}>
+                <Grid.Column width={10}>
+                  <h3 style={{ color: "white" }}>Estatísticas</h3>
 
-                    <Form onSubmit={this.onSocietyChange} error={!!this.state.errorMessage}>
-                          <Input
-                              value={society_chosen_name}
-                              onChange={event => this.setState({ society_chosen_name: event.target.value })}
-                              placeholder='Nome da entidade'
-                          />
-                          <Message error header="Oops!" content={this.state.errorMessage} />
-                          <Button color ="violet" >
-                            Consultar
-                          </Button>
-                    </Form>
+                  <Form onSubmit={this.onSocietyChange} error={!!this.state.errorMessage}>
+                        <Input
+                            value={society_chosen_name}
+                            onChange={event => this.setState({ society_chosen_name: event.target.value })}
+                            placeholder='Nome da entidade'
+                        />
+                        <Message error header="Oops!" content={this.state.errorMessage} />
+                        <Button color ="violet" >
+                          Consultar
+                        </Button>
+                  </Form>
 
-                    {this.renderModal(this.state.bug_modal)}
-                    <br/>
+                  {this.renderModal(this.state.bug_modal)}
+                  <br/>
 
-                     {this.renderGraph(choice, societies_chosen_num)}
-                     <br/>
-                      <Button color="violet" onClick={this.graphChange}>Trocar</Button>
-                  </Grid.Column>
-
-                </Grid.Row>
-                <Grid.Row>
-                </Grid.Row>                
-            </Grid>
+                  {this.renderGraph(choice, societies_chosen_num)}
+                  <br/>
+                    <Button color="violet" onClick={this.graphChange}>Trocar</Button>
+                </Grid.Column>
+              </Responsive>
+            </Grid.Row>
+             
+             <Grid.Row></Grid.Row>
+          </Grid>
+        </Responsive>
         </div>
       </Layout>
     );
