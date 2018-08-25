@@ -79,7 +79,7 @@ class GvCoinIndex extends Component {
             </Button>
           </Form>
           {this.renderModal(this.state.open_modal)}
-          <Responsive maxWidth={1200} {...Responsive.onlyMobile}>
+          <Responsive maxWidth={1200}>
             <img src="/static/logo_2.png" alt="my image" height="640" width="912"/>
           </Responsive>
 
