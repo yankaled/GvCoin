@@ -90,7 +90,7 @@ class GvCoinIndex extends Component {
               </Responsive>
             </Grid.Column>
 
-            <Responsive minWidth={1600}>
+            <Responsive minWidth={1201}>
               <Grid.Column>
                 <img src="/static/logo_2.png" alt="my image"/>
               </Grid.Column>
