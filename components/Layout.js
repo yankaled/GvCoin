@@ -1,5 +1,5 @@
 import React from 'react';
-import { Container, Grid } from 'semantic-ui-react';
+import { Container, Grid, Responsive } from 'semantic-ui-react';
 import Head from 'next/head';
 import Header from './Header';
 import Footer from './Footer';
@@ -49,7 +49,9 @@ export default props => {
       </Container>
 
       <div style={{ width: "100%" }}>
-        <Footer />
+        <Responsive minWidth={1200}>
+          <Footer />
+        </Responsive>
       </div>
     </div>
   );

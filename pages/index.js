@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Button, Form, Header, Icon, Modal } from 'semantic-ui-react';
+import { Button, Form, Header, Icon, Modal, Responsive } from 'semantic-ui-react';
 import Layout from '../components/Layout';
 import { Router } from '../routes';
 import web3 from '../ethereum/web3';
@@ -79,9 +79,13 @@ class GvCoinIndex extends Component {
             </Button>
           </Form>
           {this.renderModal(this.state.open_modal)}
-          <div className="codeLogoLanding">
+          <Responsive minWidth={1200}>
             <img src="/static/logo_2.png" alt="my image"/>
-          </div>  
+          </Responsive>
+
+          <Responsive maxWidth={1199}>
+            <img src="/static/logo_2.png" alt="my image" height="320" width="456"/>
+          </Responsive>
         </div>
       </Layout>
     );
