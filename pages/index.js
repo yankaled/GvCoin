@@ -74,9 +74,9 @@ class GvCoinIndex extends Component {
               this.setState({ access_token: event.target.value })} 
             />
             <Button animated='fade' positive>
-      <Button.Content visible> Validar token de acesso </Button.Content>
-      <Button.Content hidden>Comece sua experiência</Button.Content>
-    </Button>
+              <Button.Content visible> Validar token de acesso </Button.Content>
+              <Button.Content hidden>Começar</Button.Content>
+            </Button>
           </Form>
           {this.renderModal(this.state.open_modal)}
           <div className="codeLogoLanding">

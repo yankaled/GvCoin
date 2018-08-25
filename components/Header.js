@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Menu, MenuItem } from 'semantic-ui-react'
+import { Menu, MenuItem, Image } from 'semantic-ui-react'
 import { Router } from '../routes';
 
 export default class HeaderContentProp extends Component {
@@ -17,12 +17,11 @@ export default class HeaderContentProp extends Component {
 
     return (
       <Menu fluid widths={7} style={{ borderRadius: '0px' }}>
-        <img src="/static/logo_2.png" alt="my image" height="80" width="114"/>
-        <Menu.Item target='_blank'
-          name='landing'
-          active={activeItem === 'landing'}
-          content='Landing'
-          onClick={this.backToLanding}
+        <Image
+          src="/static/logo_2.png"
+          href='/'
+          height="80"
+          width="114"
         />
         <Menu.Item href='http://gvcode.com.br/' target='_blank'
           name='gvcode'
@@ -38,10 +37,10 @@ export default class HeaderContentProp extends Component {
           onClick={this.handleItemClick}
         />
 
-        <Menu.Item href='https://eaesp.fgv.br/escola/departamentos/APOI' target='_blank'
-          name='poi'
-          active={activeItem === 'poi'}
-          content='POI'
+        <Menu.Item href='https://pesquisa-eaesp.fgv.br' target='_blank'
+          name='gvpesquisa'
+          active={activeItem === 'gvpesquisa'}
+          content='GvPesquisa'
           onClick={this.handleItemClick}
         />
 
@@ -49,6 +48,12 @@ export default class HeaderContentProp extends Component {
           name='fgv'
           active={activeItem === 'fgv'}
           content='FGV'
+          onClick={this.handleItemClick}
+        />
+        <Menu.Item href='http://www.cnpq.br/' target='_blank'
+          name='cnpq'
+          active={activeItem === 'cnpq'}
+          content='CNPq'
           onClick={this.handleItemClick}
         />
         <Menu.Item href='https://metamask.io/' target='_blank'

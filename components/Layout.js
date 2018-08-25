@@ -42,13 +42,15 @@ export default props => {
             href="//cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.12/semantic.min.css"
           />
         </Head>
+
         <Container>
           {props.children}
         </Container>
-        <div style={{ width: "100%" }}>
-          <Footer />
-        </div>
       </Container>
+
+      <div style={{ width: "100%" }}>
+        <Footer />
+      </div>
     </div>
   );
 };
